@@ -28,7 +28,7 @@ const ChatInput: FC<ChatInputProps> = ({ className, ...props }) => {
           rows={2}
           maxRows={12}
           placeholder="Send a message."
-          className="bg-[#40414F] w-full text-white resize-none outline-none rounded-lg py-[10px] px-3"
+          className="bg-[#40414F] w-full text-white resize-none outline-none rounded-lg py-[10px] pl-3 pr-12"
         />
         <kbd className="absolute inset-y-0 right-0 py-[5px] px-[5px]">
           <div className="hover:bg-green-400 rounded-md group py-[5px] px-[5px]">
