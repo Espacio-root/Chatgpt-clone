@@ -1,6 +1,7 @@
 import Sidebar from "@/components/Sidebar";
 import "./globals.css";
 import { Inter } from "next/font/google";
+import Layout from "@/components/Providers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,12 +17,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <main className="absolute inset-0 flex">
-          <Sidebar className='w-[260px]'/>
-          {children}
-        </main>
-      </body>
+      <Layout>
+        <body className={inter.className}>
+          <main className="absolute inset-0 flex">
+            <Sidebar className="w-[260px]" />
+            {children}
+          </main>
+        </body>
+      </Layout>
     </html>
   );
 }
