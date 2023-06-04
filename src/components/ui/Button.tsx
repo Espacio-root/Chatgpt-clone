@@ -3,12 +3,13 @@ import { cva, VariantProps } from 'class-variance-authority';
 import { FC } from 'react'
 
 export const buttonVariants = cva(
-  "active:scale-95 inline-flex items-center justify-center rounded-md text-sm font-medium transition-color focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none",
+  "active:scale-95 inline-flex items-center justify-center rounded-md text-sm font-medium transition-color focus:outline-none disabled:opacity-50 disabled:pointer-events-none",
   {
     variants: {
       variant: {
-        default: "bg-[#40414F] text-white hover:bg-[#56565e]",
-        ghost: "bg-transparent text-white hover:bg-[#56565e]",
+        default: "bg-[#1A7F64] text-white hover:bg-[#10A37F]",
+        ghost: "bg-transparent text-white hover:bg-white hover:bg-opacity-10",
+        ghostBorder: "bg-transparent text-white hover:bg-white hover:bg-opacity-10 border border-white border-opacity-70 hover:border-opacity-50",
       },
       size: {
         default: "h-10 py-2 px-4",

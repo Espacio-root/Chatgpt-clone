@@ -1,13 +1,15 @@
 'use client';
 
+import { addPrismaMessage } from "@/lib/prisma-helper";
 import { Message } from "@/lib/validators/message";
 import { nanoid } from "nanoid";
 import { createContext, useState } from "react";
 
 const defaultValue = [
     {
+        chatId: '',
         id: nanoid(),
-        text: 'Hello, how can I help you?',
+        text: '',
         isUserMessage: false,
     }
 ]
@@ -15,26 +17,34 @@ const defaultValue = [
 interface MessageContextType {
     messages: Message[]
     isMessageUpdating: boolean
+    getMessage: (id: string) => Message
     addMessage: (message: Message) => void
     removeMessage: (id: string) => void
     updateMessage: (id: string, newMessage: string) => void
     setIsMessageUpdating: (isUpdating: boolean) => void
+    setMessages: (messages: Message[]) => void
 }
 
 export const MessageContext = createContext<MessageContextType>(
     {
         messages: [],
         isMessageUpdating: false,
+        getMessage: () => defaultValue[0],
         addMessage: () => {},
         removeMessage: () => {},
         updateMessage: () => {},
-        setIsMessageUpdating: () => {}
+        setIsMessageUpdating: () => {},
+        setMessages: () => {},
     }
 )
 
 export function MessageProvider({children} : {children: React.ReactNode}) {
     const [messages, setMessages] = useState<Message[]>(defaultValue)
     const [isMessageUpdating, setIsMessageUpdating] = useState(false)
+
+    const getMessage =  (id: string) => {
+        return messages.find((m) => m.id === id)!
+    }
 
     const addMessage = (message: Message) => {
         setMessages((prev) => [...prev, message])
@@ -47,6 +57,13 @@ export function MessageProvider({children} : {children: React.ReactNode}) {
     const updateMessage = (id: string, newMessage: string) => {
         setMessages((prev) => prev.map((m) => {
             if (m.id === id) {
+                if (newMessage === '[DONE]') {
+                    addPrismaMessage(m)
+                    return {
+                        ...m,
+                        text: m.text,
+                    }
+                }
                 return {
                     ...m,
                     text: m.text + newMessage
@@ -55,15 +72,18 @@ export function MessageProvider({children} : {children: React.ReactNode}) {
             return m
         })
     )}
+    
 
     return (
         <MessageContext.Provider value={{
             messages,
             isMessageUpdating,
+            getMessage,
             addMessage,
             removeMessage,
             updateMessage,
             setIsMessageUpdating,
+            setMessages,
         }}>
             {children}
         </MessageContext.Provider>

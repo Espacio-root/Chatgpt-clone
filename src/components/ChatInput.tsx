@@ -10,10 +10,13 @@ import { Message } from "@/lib/validators/message";
 import { MessageContext } from "@/context/messages";
 import { nanoid } from "nanoid";
 import { StreamReader } from "@/lib/openai-stream";
+import { addPrismaMessage } from "@/lib/prisma-helper";
 
-interface ChatInputProps extends React.HTMLAttributes<HTMLDivElement> {}
+interface ChatInputProps extends React.HTMLAttributes<HTMLDivElement> {
+  chatId: string
+}
 
-const ChatInput: FC<ChatInputProps> = ({ className, ...props }) => {
+const ChatInput: FC<ChatInputProps> = ({ className, chatId, ...props }) => {
   const [input, setInput] = useState("");
   const {messages, addMessage, removeMessage, updateMessage, setIsMessageUpdating} = useContext(MessageContext)
   const { mutate: sendMessage, isLoading } = useMutation({
@@ -31,13 +34,15 @@ const ChatInput: FC<ChatInputProps> = ({ className, ...props }) => {
     },
     onMutate(message: Message) {
       addMessage(message)
+      addPrismaMessage(message)
     },
     onSuccess: async (stream : any) => {
       if (!stream) throw new Error('Stream Not Available')
       
       const id = nanoid()
       const responseMessage: Message = {
-        id,
+        chatId: chatId,
+        id: id,
         isUserMessage: false,
         text: '',
       }
@@ -45,7 +50,7 @@ const ChatInput: FC<ChatInputProps> = ({ className, ...props }) => {
       
       // const reader = stream.getReader();
       const decoder = new TextDecoder("utf-8");
-      StreamReader(stream, decoder, (newText) => updateMessage(id, newText))
+      await StreamReader(stream, decoder, (newText) => updateMessage(id, newText))
     }
   })
 
@@ -53,6 +58,7 @@ const ChatInput: FC<ChatInputProps> = ({ className, ...props }) => {
     if (input.length === 0) return
 
     const message: Message = {
+      chatId: chatId,
       id: nanoid(),
       text: input,
       isUserMessage: true,

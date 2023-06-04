@@ -14,9 +14,11 @@ const Sidebar: FC<SidebarProps> = ({className, ...props}) => {
   return (
     <div {...props} className={cn('bg-sidebar-bg text-white', className)}>
       <div className='h-full flex flex-col'>
-        <div className='flex-1 flex flex-col justify-center items-center'> </div>
+        <div className='flex-1 flex flex-col overflow-scroll'> 
+          
+        </div>
         <div className='flex'>
-          <Image src={session?.user?.image} width={32} height={32} />
+          <Image src={session?.user?.image!} width={32} height={32} alt='User Avatar' />
           <p>{session?.user?.name}</p>
         </div>
       </div>

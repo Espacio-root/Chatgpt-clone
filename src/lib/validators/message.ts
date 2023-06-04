@@ -1,6 +1,7 @@
 import { z } from 'zod'
 
 export const messageSchema = z.object({
+    chatId: z.string(),
     id: z.string(),
     text: z.string(),
     isUserMessage: z.boolean(),
