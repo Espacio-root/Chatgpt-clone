@@ -10,18 +10,32 @@ datasource db {
   url      = "file:./dev.db"
 }
 
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  image         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  chats         chat[]
+}
+
 model message {
-  id              String   @id @default(uuid())
+  id              String   @id @default(cuid())
   text            String
   isUserMessage   Boolean
+
   chat            chat     @relation(fields: [chatId], references: [id])
   chatId          String
 }
 
 model chat {
-  id         String    @id @default(uuid())
+  id         String    @id @default(cuid())
   createdAt  DateTime  @default(now())
   updatedAt  DateTime  @updatedAt 
   name       String
   messages   message[]
+
+  userId String
+  user      User      @relation(fields: [userId], references: [id])
 }

@@ -1,16 +1,5 @@
 import axios from "axios"
-import { useMutation, useQuery } from "@tanstack/react-query"
 import { Message } from "./validators/message"
-import { MessageContext } from "@/context/messages"
-import { useContext } from "react"
-
-// export const getMessages = (chatId: string) => useQuery({
-//   queryKey: ['messages', chatId],
-//   queryFn: async () => {
-//     const res = await axios.get(`/api/prisma/message/?chatId=${chatId}`)
-//     return res.data
-//   },
-// })
 
 export const getMessages = async (chatId: string) => {
     const res = await axios.get(`/api/prisma/message/?chatId=${chatId}`)
@@ -23,4 +12,17 @@ export const addPrismaMessage = async (message: Message) => {
         message: parsedMessage
     })
     return res.status
+}
+
+export const getPrismaChats = async (user: string) => {
+    const res = await axios.get(`/api/prisma/chat/?user=${user}`)
+    return res.data
+}
+
+export const addPrismaChat = async (userId: string, name: string) => {
+    const res = await axios.post(`/api/prisma/chat`, {
+        userId: userId,
+        name: name
+    })
+    return res
 }

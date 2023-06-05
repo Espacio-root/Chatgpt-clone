@@ -10,7 +10,7 @@ interface GoogleLoginButtonProps {}
 
 const GoogleLoginButton: FC<GoogleLoginButtonProps> = ({}) => {
     const searchParams = useSearchParams();
-    const callbackUrl = searchParams.get("callbackUrl") || "/chat";
+    const callbackUrl = searchParams.get("callbackUrl") || "/chat/";
   return (
     <Button
       variant="ghost"

@@ -15,6 +15,8 @@ const defaultValue = [
 ]
 
 interface MessageContextType {
+    chats: any[]
+    setChats: (chats: any[]) => void
     messages: Message[]
     isMessageUpdating: boolean
     getMessage: (id: string) => Message
@@ -27,6 +29,8 @@ interface MessageContextType {
 
 export const MessageContext = createContext<MessageContextType>(
     {
+        chats: [],
+        setChats: () => {},
         messages: [],
         isMessageUpdating: false,
         getMessage: () => defaultValue[0],
@@ -41,6 +45,8 @@ export const MessageContext = createContext<MessageContextType>(
 export function MessageProvider({children} : {children: React.ReactNode}) {
     const [messages, setMessages] = useState<Message[]>(defaultValue)
     const [isMessageUpdating, setIsMessageUpdating] = useState(false)
+
+    const [chats, setChats] = useState([] as any);
 
     const getMessage =  (id: string) => {
         return messages.find((m) => m.id === id)!
@@ -76,6 +82,8 @@ export function MessageProvider({children} : {children: React.ReactNode}) {
 
     return (
         <MessageContext.Provider value={{
+            chats,
+            setChats,
             messages,
             isMessageUpdating,
             getMessage,

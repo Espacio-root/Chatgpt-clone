@@ -1,3 +1,4 @@
+import { prisma } from "@/lib/prisma";
 import { NextAuthOptions } from "next-auth";
 import NextAuth from "next-auth/next";
 import GoogleProvider from "next-auth/providers/google";
@@ -24,7 +25,25 @@ export const authOptions: NextAuthOptions = {
     ],
     pages: {
         signIn: "/auth",
-    }
+    },
+    callbacks: {
+        session: async ({session}) => {
+            let newUser = {id: ''};
+            try {
+                const user = session.user
+                if (user){
+                    newUser = await prisma.user.upsert({
+                        where: { email: user?.email! },
+                        create: user!,
+                        update: {},
+                    });
+                }
+            } catch (error) {
+                console.log(error)
+            } finally {
+            return {...session, user: {...session.user, id: newUser?.id}} }
+        }
+    },
 }
 
 const handler = NextAuth(authOptions);

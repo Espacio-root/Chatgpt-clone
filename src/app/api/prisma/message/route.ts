@@ -15,7 +15,7 @@ export async function POST(req: Request) {
 }
 
 export async function GET(req: Request) {
-    const chatId = req.url.split('/')[-1]
+    const chatId = req.url.split('=')[1]
     const res = await prisma.message.findMany({
         where: {
             chatId: chatId
