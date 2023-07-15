@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@mantine/hooks": "^6.0.13",
     "@next-auth/prisma-adapter": "^0.4.4-canary.81",
     "@prisma/client": "^4.15.0",
     "@tailwindcss/forms": "^0.5.3",

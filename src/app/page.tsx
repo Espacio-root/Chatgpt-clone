@@ -12,10 +12,10 @@ const Home: FC<HomeProps> = ({}) => {
   const { data: session } = useSession({ required: false });
   const { push } = useRouter();
   if (session) {
-    push("/chat/");
+    push("/chat/new");
   }
   const handleClick = () => {
-    push("/auth?callbackUrl=/chat/");
+    push("/auth?callbackUrl=/chat/new");
   };
 
   return (

@@ -25,11 +25,13 @@ export async function POST(req: Request) {
 }
 
 export async function GET(req: Request) {
-    const userId = req.url.split('=')[1]
+    const params = Object.values(Object.fromEntries(new URLSearchParams(req.url).entries()))
     const res = await prisma.chat.findMany({
         where: {
-            userId: userId
-        }
+            userId: params[0]
+        },
+        take: 15,
+        skip: parseInt(params[1]),
     })
     if (res) {
         return new Response(JSON.stringify(res), {
