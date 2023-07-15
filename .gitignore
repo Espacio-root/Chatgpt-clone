@@ -40,5 +40,5 @@ next-env.d.ts
 **/prisma/**/migrations
 
 # etc
-**/test
+**/test/
 ```

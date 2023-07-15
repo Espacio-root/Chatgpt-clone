@@ -9,7 +9,7 @@ interface pageProps {
   
 }
 
-const page: FC<pageProps> = ({}) => {
+const Page: FC<pageProps> = ({}) => {
   const chatId = 'clij5fuau000duay8h4wi2vcx'
   const [messages, setMessages] = useState<any[]>([])
   const lastPostRef = useRef<HTMLDivElement>(null)
@@ -75,4 +75,4 @@ const page: FC<pageProps> = ({}) => {
   )
 };
 
-export default page;
+export default Page;
