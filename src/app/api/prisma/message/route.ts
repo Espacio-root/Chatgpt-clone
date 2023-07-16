@@ -20,8 +20,8 @@ export async function GET(req: Request) {
         where: {
             chatId: params[0]
         },
-        skip: parseInt(params[1]),
-        take: 5
+        // skip: parseInt(params[1]),
+        // take: 5
     })
     if (res) {
         return new Response(JSON.stringify(res), {

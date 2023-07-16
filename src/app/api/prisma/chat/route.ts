@@ -31,7 +31,7 @@ export async function GET(req: Request) {
             userId: params[0]
         },
         take: 15,
-        skip: parseInt(params[1]),
+        // skip: parseInt(params[1]),
     })
     if (res) {
         return new Response(JSON.stringify(res), {
