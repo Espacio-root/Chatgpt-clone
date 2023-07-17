@@ -22,7 +22,7 @@ const ChatMessages: FC<ChatMessagesProps> = ({ className, chatId, ...props }) =>
       }
     }
     fetchdata()
-  }, [])
+  }, [chatId])
 
   return (
     <div {...props} className={cn("overflow-y-scroll overflow-x-hidden", className)}>
