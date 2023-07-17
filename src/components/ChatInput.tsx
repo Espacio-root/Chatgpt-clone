@@ -38,7 +38,7 @@ const ChatInput: FC<ChatInputProps> = ({ className, chatId, ...props }) => {
     },
     onSuccess: async (stream : any) => {
       if (!stream) throw new Error('Stream Not Available')
-      console.log('debut', stream)
+      
       const id = nanoid()
       const responseMessage: Message = {
         chatId: chatId,
@@ -47,6 +47,7 @@ const ChatInput: FC<ChatInputProps> = ({ className, chatId, ...props }) => {
         text: '',
       }
       addMessage(responseMessage)
+      console.log(messages)
       
       // const reader = stream.getReader();
       const decoder = new TextDecoder("utf-8");
