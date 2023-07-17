@@ -61,6 +61,7 @@ export function MessageProvider({children} : {children: React.ReactNode}) {
     }
 
     const updateMessage = (id: string, newMessage: string) => {
+        console.log(id, newMessage)
         setMessages((prev) => prev.map((m) => {
             if (m.id === id) {
                 if (newMessage === '[DONE]') {
