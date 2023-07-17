@@ -39,7 +39,7 @@ export async function OpenAIStream(payload: OpenAIStreamPayload) {
 
 export async function StreamReader(stream: any, decoder: TextDecoder, callBackFn: (newText: string) => void) {
     const reader = stream.getReader();
-
+    console.log(reader)
     while (true) {
         const chunk = await reader.read();
         const { done, value } = chunk ?? { done: true, value: undefined };
