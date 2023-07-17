@@ -39,13 +39,12 @@ export async function OpenAIStream(payload: OpenAIStreamPayload) {
 
 export async function StreamReader(stream: any, decoder: TextDecoder, callBackFn: (newText: string) => void) {
     const reader = stream.getReader();
-    
+
     while (true) {
         const chunk = await reader.read();
         const { done, value } = chunk ?? { done: true, value: undefined };
 
         if (done) {
-            console.log('break')
             break;
         }
 
@@ -54,11 +53,10 @@ export async function StreamReader(stream: any, decoder: TextDecoder, callBackFn
         const parsedLines = lines
             .map((line) => line.replace(/^data: /, "").trim()) // Remove the "data: " prefix
             .filter((line) => line !== "") // Remove empty lines and "[DONE]"
-            .map((line) => {
-                if (line.includes('[DONE]')) {callBackFn("[DONE]")} else {
-                return JSON.parse(line)}}); // Parse the JSON string
+            .map((line) => JSON.parse(line)); // Parse JSON
         parsedLines.forEach((line) => {
             if (line?.choices?.[0]?.delta?.content) {
+                // callBackFn(id, line.choices[0].delta.content)
                 callBackFn(line.choices[0].delta.content)
             }
         })
