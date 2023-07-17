@@ -30,7 +30,7 @@ export async function GET(req: Request) {
         where: {
             userId: params[0]
         },
-        take: 15,
+        // take: 15,
         // skip: parseInt(params[1]),
     })
     if (res) {
