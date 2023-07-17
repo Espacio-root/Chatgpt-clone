@@ -42,10 +42,10 @@ export async function StreamReader(stream: any, decoder: TextDecoder, callBackFn
     
     while (true) {
         const chunk = await reader.read();
-        console.log(chunk)
         const { done, value } = chunk ?? { done: true, value: undefined };
 
         if (done) {
+            console.log('break')
             break;
         }
 
